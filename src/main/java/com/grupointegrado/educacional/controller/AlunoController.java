@@ -4,6 +4,7 @@ import com.grupointegrado.educacional.dto.AlunoRequestDTO;
 import com.grupointegrado.educacional.model.Aluno;
 import com.grupointegrado.educacional.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,14 +17,16 @@ public class AlunoController {
     private AlunoRepository repository;
 
     @GetMapping
-    public List<Aluno> findAll() {
-        return this.repository.findAll();
+    public ResponseEntity<List<Aluno>> findAll() {
+        return ResponseEntity.ok(this.repository.findAll());
     }
 
     @GetMapping("/{id}")
-    public Aluno findById(@PathVariable Integer id) {
-        return this.repository.findById(id)
+    public ResponseEntity<Aluno> findById(@PathVariable Integer id) {
+        Aluno aluno = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+
+        return ResponseEntity.ok(aluno);
     }
 
     @PostMapping
@@ -42,18 +45,32 @@ public class AlunoController {
                         @RequestBody AlunoRequestDTO dto) {
         Aluno aluno = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
-        aluno.setNome(dto.nome());
-        aluno.setEmail(dto.email());
-        aluno.setDataNascimento(dto.dataNascimento());
-        aluno.setMatricula(dto.matricula());
+
+        if (!aluno.getNome().equals(dto.nome())) {
+            aluno.setNome(dto.nome());
+        }
+
+        if (!aluno.getEmail().equals(dto.email())) {
+            aluno.setEmail(dto.email());
+        }
+
+        if (!aluno.getDataNascimento().equals(dto.dataNascimento())) {
+            aluno.setDataNascimento(dto.dataNascimento());
+        }
+
+        if (!aluno.getMatricula().equals(dto.matricula())) {
+            aluno.setMatricula(dto.matricula());
+        }
+
         return  this.repository.save(aluno);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         Aluno aluno = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
         this.repository.delete(aluno);
+        return ResponseEntity.noContent().build();
     }
 }
 
