@@ -30,7 +30,7 @@ public class TurmaController {
     @GetMapping("/{id}")
     public ResponseEntity<Turma> findById(@PathVariable Integer id) {
         Turma turma = this.repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Turma não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Turma não encontrada"));
 
         return ResponseEntity.ok(turma);
     }

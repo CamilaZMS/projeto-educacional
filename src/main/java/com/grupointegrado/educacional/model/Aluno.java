@@ -1,8 +1,11 @@
 package com.grupointegrado.educacional.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "alunos")
@@ -21,8 +24,13 @@ public class Aluno {
     @Column (length = 20)
     private String matricula;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column
     private LocalDate dataNascimento;
+
+    @OneToMany(mappedBy = "aluno")
+    @JsonIgnoreProperties("matriculas")
+    private List<Matricula> matriculas;
 
     public LocalDate getDataNascimento() {
         return dataNascimento;
@@ -63,4 +71,13 @@ public class Aluno {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
+
 }
