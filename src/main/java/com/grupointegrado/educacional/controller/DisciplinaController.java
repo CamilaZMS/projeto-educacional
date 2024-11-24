@@ -8,14 +8,17 @@ import com.grupointegrado.educacional.model.Professor;
 import com.grupointegrado.educacional.repository.CursoRepository;
 import com.grupointegrado.educacional.repository.DisciplinaRepository;
 import com.grupointegrado.educacional.repository.ProfessorRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/disciplinas")
+@Validated
 public class DisciplinaController {
 
     @Autowired
@@ -41,7 +44,7 @@ public class DisciplinaController {
     }
 
     @PostMapping
-    public Disciplina save(@RequestBody DisciplinaRequestDTO dto) {
+    public Disciplina save(@Valid @RequestBody DisciplinaRequestDTO dto) {
         Disciplina disciplina = new Disciplina();
         disciplina.setNome(dto.nome());
         disciplina.setCodigo(dto.codigo());
