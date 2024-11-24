@@ -3,14 +3,18 @@ package com.grupointegrado.educacional.controller;
 import com.grupointegrado.educacional.dto.AlunoRequestDTO;
 import com.grupointegrado.educacional.model.Aluno;
 import com.grupointegrado.educacional.repository.AlunoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/alunos")
+@Validated
 public class AlunoController {
 
     @Autowired
@@ -30,14 +34,18 @@ public class AlunoController {
     }
 
     @PostMapping
-    public Aluno save(@RequestBody AlunoRequestDTO dto) {
-            Aluno aluno = new Aluno();
-            aluno.setNome(dto.nome());
+    public Aluno save(@Valid @RequestBody AlunoRequestDTO dto) {
+        Aluno aluno = new Aluno();
+        aluno.setNome(dto.nome());
+        aluno.setDataNascimento(dto.dataNascimento());
+
+        if (dto.email() != null && !dto.email().isBlank()) {
             aluno.setEmail(dto.email());
-            aluno.setDataNascimento(dto.dataNascimento());
-//            TO DO gerar matricula automatica
-            aluno.setMatricula(dto.matricula());
-            return  this.repository.save(aluno);
+        } else {
+            aluno.setEmail(null);
+        }
+
+        return  this.repository.save(aluno);
     }
 
     @PutMapping("/{id}")
@@ -46,23 +54,19 @@ public class AlunoController {
         Aluno aluno = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
 
-        if (!aluno.getNome().equals(dto.nome())) {
+        if (!Objects.equals(aluno.getNome(), dto.nome())) {
             aluno.setNome(dto.nome());
         }
 
-        if (!aluno.getEmail().equals(dto.email())) {
+        if (!Objects.equals(aluno.getEmail(), dto.email())) {
             aluno.setEmail(dto.email());
         }
 
-        if (!aluno.getDataNascimento().equals(dto.dataNascimento())) {
+        if (!Objects.equals(aluno.getDataNascimento(), dto.dataNascimento())) {
             aluno.setDataNascimento(dto.dataNascimento());
         }
 
-        if (!aluno.getMatricula().equals(dto.matricula())) {
-            aluno.setMatricula(dto.matricula());
-        }
-
-        return  this.repository.save(aluno);
+        return this.repository.save(aluno);
     }
 
     @DeleteMapping("/{id}")

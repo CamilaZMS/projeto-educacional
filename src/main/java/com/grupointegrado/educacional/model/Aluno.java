@@ -1,6 +1,5 @@
 package com.grupointegrado.educacional.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -24,7 +23,6 @@ public class Aluno {
     @Column (length = 20)
     private String matricula;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column
     private LocalDate dataNascimento;
 
