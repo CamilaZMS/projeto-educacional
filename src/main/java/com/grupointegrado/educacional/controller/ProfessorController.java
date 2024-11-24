@@ -4,14 +4,17 @@ package com.grupointegrado.educacional.controller;
 import com.grupointegrado.educacional.dto.ProfessorRequestDTO;
 import com.grupointegrado.educacional.model.Professor;
 import com.grupointegrado.educacional.repository.ProfessorRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/professores")
+@Validated
 public class ProfessorController {
 
     @Autowired
@@ -31,7 +34,7 @@ public class ProfessorController {
     }
 
     @PostMapping
-    public Professor save(@RequestBody ProfessorRequestDTO dto) {
+    public Professor save(@Valid @RequestBody ProfessorRequestDTO dto) {
             Professor professor = new Professor();
             professor.setNome(dto.nome());
             professor.setEmail(dto.email());
