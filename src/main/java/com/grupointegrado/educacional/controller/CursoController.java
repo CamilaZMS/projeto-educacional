@@ -3,14 +3,17 @@ package com.grupointegrado.educacional.controller;
 import com.grupointegrado.educacional.dto.CursoRequestDTO;
 import com.grupointegrado.educacional.model.Curso;
 import com.grupointegrado.educacional.repository.CursoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/cursos")
+@Validated
 public class CursoController {
 
     @Autowired
@@ -30,7 +33,7 @@ public class CursoController {
     }
 
     @PostMapping
-    public Curso save(@RequestBody CursoRequestDTO dto) {
+    public Curso save(@Valid @RequestBody CursoRequestDTO dto) {
             Curso curso = new Curso();
             curso.setNome(dto.nome());
             curso.setCodigo(dto.codigo());
