@@ -1,7 +1,6 @@
 package com.grupointegrado.educacional.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class Disciplina {
     private Professor professor;
 
     @OneToMany(mappedBy = "disciplina")
-    @JsonIgnoreProperties("notas")
+    @JsonIgnore
     private List<Nota> notas;
 
     public Curso getCurso() {
