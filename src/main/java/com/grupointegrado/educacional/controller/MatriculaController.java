@@ -8,14 +8,17 @@ import com.grupointegrado.educacional.model.Turma;
 import com.grupointegrado.educacional.repository.AlunoRepository;
 import com.grupointegrado.educacional.repository.MatriculaRepository;
 import com.grupointegrado.educacional.repository.TurmaRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/matriculas")
+@Validated
 public class MatriculaController {
 
     @Autowired
@@ -41,7 +44,7 @@ public class MatriculaController {
     }
 
     @PostMapping
-    public Matricula save(@RequestBody MatriculaRequestDTO dto) {
+    public Matricula save(@Valid  @RequestBody MatriculaRequestDTO dto) {
         Matricula matricula = new Matricula();
 
         Aluno aluno = alunoRepository.findById(dto.alunoId())

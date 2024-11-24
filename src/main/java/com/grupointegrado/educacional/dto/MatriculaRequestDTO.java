@@ -1,4 +1,12 @@
 package com.grupointegrado.educacional.dto;
 
-public record MatriculaRequestDTO(Integer alunoId, Integer turmaId) {
+import jakarta.validation.constraints.NotNull;
+
+public record MatriculaRequestDTO(
+        @NotNull(message = "Aluno é obrigatório")
+        Integer alunoId,
+
+        @NotNull(message = "Truma é obrigatório")
+        Integer turmaId
+) {
 }
