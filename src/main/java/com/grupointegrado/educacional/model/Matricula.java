@@ -26,7 +26,7 @@ public class Matricula {
 
     @OneToMany(mappedBy = "matricula")
     @JsonIgnoreProperties("notas")
-    private List<Notas> notas;
+    private List<Nota> notas;
 
     public Integer getId() {
         return id;
@@ -52,11 +52,11 @@ public class Matricula {
         this.turma = turma;
     }
 
-    public List<Notas> getNotas() {
+    public List<Nota> getNotas() {
         return notas;
     }
 
-    public void setNotas(List<Notas> notas) {
+    public void setNotas(List<Nota> notas) {
         this.notas = notas;
     }
 }
