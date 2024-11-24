@@ -6,14 +6,17 @@ import com.grupointegrado.educacional.model.Curso;
 import com.grupointegrado.educacional.model.Turma;
 import com.grupointegrado.educacional.repository.CursoRepository;
 import com.grupointegrado.educacional.repository.TurmaRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/turmas")
+@Validated
 public class TurmaController {
 
     @Autowired
@@ -36,7 +39,7 @@ public class TurmaController {
     }
 
     @PostMapping
-    public Turma save(@RequestBody TurmaRequestDTO dto) {
+    public Turma save(@Valid @RequestBody TurmaRequestDTO dto) {
         Turma turma = new Turma();
         turma.setAno(dto.ano());
         turma.setSemestre(dto.semestre());
