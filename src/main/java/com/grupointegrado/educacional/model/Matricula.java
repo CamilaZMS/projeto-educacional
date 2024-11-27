@@ -1,14 +1,11 @@
 package com.grupointegrado.educacional.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "matriculas")
-public class Matricula {
+public class    Matricula {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +20,6 @@ public class Matricula {
     @JoinColumn(name = "turma_id", referencedColumnName = "id",  nullable = false)
     @JsonIgnore
     private Turma turma;
-
-    @OneToMany(mappedBy = "matricula")
-    @JsonIgnoreProperties("notas")
-    private List<Nota> notas;
 
     public Integer getId() {
         return id;
@@ -52,11 +45,4 @@ public class Matricula {
         this.turma = turma;
     }
 
-    public List<Nota> getNotas() {
-        return notas;
-    }
-
-    public void setNotas(List<Nota> notas) {
-        this.notas = notas;
-    }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,9 +26,9 @@ public class Turma {
     @JsonIgnore
     private Curso curso;
 
-    @OneToMany(mappedBy = "turma")
+    @OneToMany(mappedBy = "turma", orphanRemoval = true)
     @JsonIgnoreProperties("matriculas")
-    private List<Matricula> matriculas;
+    private List<Matricula> matriculas = new ArrayList<>();
 
     public Curso getCurso() {
         return curso;

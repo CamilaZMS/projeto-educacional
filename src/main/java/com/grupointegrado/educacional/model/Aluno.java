@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,9 +27,9 @@ public class Aluno {
     @Column
     private LocalDate dataNascimento;
 
-    @OneToMany(mappedBy = "aluno")
+    @OneToMany(mappedBy = "aluno", orphanRemoval = true)
     @JsonIgnoreProperties("matriculas")
-    private List<Matricula> matriculas;
+    private List<Matricula> matriculas = new ArrayList<>();
 
     public LocalDate getDataNascimento() {
         return dataNascimento;
